@@ -34,6 +34,7 @@ plt.plot(datesus.values,valus.values,label = 'US Cases')
 plt.plot(datesitaly.values,valitaly.values,label = 'Italy Cases')
 plt.xlabel('Date')
 plt.ylabel('Cases')
+plt.ticklabel_format(axis="y",style="plain")
 
 plt.legend()
 plt.show()
