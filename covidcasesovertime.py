@@ -4,8 +4,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 #import numpy as np
 
+#url for raw data
+url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+
 #read csv into dataframe
-data = pd.read_csv(r'C:\Users\phil_\OneDrive\Documents\GitHub\COVID-19-DATA\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_confirmed_global.csv')
+data = pd.read_csv(url)
+print(data)
 
 #filter datafrom for USA & Italy
 us = data[data["Country/Region"]=="US"]
