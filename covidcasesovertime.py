@@ -9,33 +9,42 @@ url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_cov
 
 #read csv into dataframe
 data = pd.read_csv(url)
-print(data)
-
-#filter datafrom for USA & Italy
-us = data[data["Country/Region"]=="US"]
-italy = data[data["Country/Region"]=="Italy"]
+# data
 
 #move columns to rows using melt
-pvtus = pd.melt(us,id_vars = ['Province/State', 'Country/Region', 'Lat', 'Long'],var_name = 'Date',value_name = 'Cases')
-pvtitaly = pd.melt(italy,id_vars = ['Province/State', 'Country/Region', 'Lat', 'Long'],var_name = 'Date',value_name = 'Cases')
-#pvtus
+data = pd.melt(data,id_vars = ['Province/State', 'Country/Region', 'Lat', 'Long'],var_name = 'Date',value_name = 'Cases')
 
-#convert date column to date datatype
-pvtus["Date"] = pd.to_datetime(pvtus["Date"])
-pvtitaly["Date"] = pd.to_datetime(pvtitaly["Date"])
+#convert data type
+data["Date"] = pd.to_datetime(data["Date"])
 
+#filter out data where the province/state != NaN. These rows are from colonies and not the main country
+data = data[~((data["Country/Region"]=="United Kingdom") & (data["Province/State"].notna()))]
+# data
 
+#roll data up to 1 row per Country/Region. Some countries have the data split by province
+rolleddata = data.groupby(['Country/Region','Lat','Long','Date'],as_index=False).sum('Cases')
+# rolleddata
+
+#filter datafrom for USA & Italy
+us = rolleddata[rolleddata["Country/Region"]=="US"]
+italy = rolleddata[rolleddata["Country/Region"]=="Italy"]
+uk = rolleddata[rolleddata["Country/Region"]=="United Kingdom"]
+data[(data["Country/Region"]=="United Kingdom") & (data["Province/State"].isna())]
 
 #get just the dates
-datesus = pvtus['Date']
-datesitaly = pvtitaly['Date']
-
+datesus = us['Date']
+datesitaly = italy['Date']
+datesuk = uk['Date']
+datesuk
 #get just the values
-valus = pvtus['Cases']
-valitaly = pvtitaly['Cases']
+valus = us["Cases"]
+valitaly = italy["Cases"]
+valuk = uk["Cases"]
+
 
 plt.plot(datesus.values,valus.values,label = 'US Cases')
 plt.plot(datesitaly.values,valitaly.values,label = 'Italy Cases')
+plt.plot(datesuk.values,valuk.values,label = 'United Kingdom Cases')
 plt.xlabel('Date')
 plt.ylabel('Cases')
 plt.ticklabel_format(axis="y",style="plain")
