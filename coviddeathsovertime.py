@@ -10,36 +10,42 @@ url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_cov
 
 #read csv into dataframe
 data = pd.read_csv(url)
-#df = pd.DataFrame(data=data)
-
-#country = df['Country/Region']
-#print(country)
-
-#filter datafrom for USA & Italy
-us = data[data["Country/Region"]=="US"]
-italy = data[data["Country/Region"]=="Italy"]
+# data
 
 #move columns to rows using melt
-pvtus = pd.melt(us,id_vars = ['Province/State', 'Country/Region', 'Lat', 'Long'],var_name = 'Date',value_name = 'Deaths')
-pvtitaly = pd.melt(italy,id_vars = ['Province/State', 'Country/Region', 'Lat', 'Long'],var_name = 'Date',value_name = 'Deaths')
-#pvtus
+data = pd.melt(data,id_vars = ['Province/State', 'Country/Region', 'Lat', 'Long'],var_name = 'Date',value_name = 'Deaths')
 
-#convert date column to date datatype
-pvtus["Date"] = pd.to_datetime(pvtus["Date"])
-pvtitaly["Date"] = pd.to_datetime(pvtitaly["Date"])
+#convert data type
+data["Date"] = pd.to_datetime(data["Date"])
 
+#filter out data where the province/state != NaN. These rows are from colonies and not the main country
+data = data[~((data["Country/Region"]=="United Kingdom") & (data["Province/State"].notna()))]
+# data
+
+#roll data up to 1 row per Country/Region. Some countries have the data split by province
+rolleddata = data.groupby(['Country/Region','Lat','Long','Date'],as_index=False).sum('Deaths')
+# rolleddata
+
+#filter datafrom for USA & Italy
+us = rolleddata[rolleddata["Country/Region"]=="US"]
+italy = rolleddata[rolleddata["Country/Region"]=="Italy"]
+uk = rolleddata[rolleddata["Country/Region"]=="United Kingdom"]
 
 
 #get just the dates
-datesus = pvtus['Date']
-datesitaly = pvtitaly['Date']
+datesus = us['Date']
+datesitaly = italy['Date']
+datesuk = uk['Date']
 
 #get just the values
-valus = pvtus['Deaths']
-valitaly = pvtitaly['Deaths']
+valus = us["Deaths"]
+valitaly = italy["Deaths"]
+valuk = uk["Deaths"]
+
 
 plt.plot(datesus.values,valus.values,label = 'US Deaths')
 plt.plot(datesitaly.values,valitaly.values,label = 'Italy Deaths')
+plt.plot(datesuk.values,valuk.values,label = 'United Kingdom Deaths')
 plt.xlabel('Date')
 plt.ylabel('Deaths')
 plt.ticklabel_format(axis="y",style="plain")

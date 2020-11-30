@@ -29,13 +29,13 @@ rolleddata = data.groupby(['Country/Region','Lat','Long','Date'],as_index=False)
 us = rolleddata[rolleddata["Country/Region"]=="US"]
 italy = rolleddata[rolleddata["Country/Region"]=="Italy"]
 uk = rolleddata[rolleddata["Country/Region"]=="United Kingdom"]
-data[(data["Country/Region"]=="United Kingdom") & (data["Province/State"].isna())]
+
 
 #get just the dates
 datesus = us['Date']
 datesitaly = italy['Date']
 datesuk = uk['Date']
-datesuk
+
 #get just the values
 valus = us["Cases"]
 valitaly = italy["Cases"]
