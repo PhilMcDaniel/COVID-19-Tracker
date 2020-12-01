@@ -43,12 +43,12 @@ valitaly = italy["Deaths"]
 valuk = uk["Deaths"]
 
 
-plt.plot(datesus.values,valus.values,label = 'US Deaths')
-plt.plot(datesitaly.values,valitaly.values,label = 'Italy Deaths')
-plt.plot(datesuk.values,valuk.values,label = 'United Kingdom Deaths')
+plt.plot(datesus.values,valus.values,label = 'US')
+plt.plot(datesitaly.values,valitaly.values,label = 'Italy')
+plt.plot(datesuk.values,valuk.values,label = 'United Kingdom')
 plt.xlabel('Date')
 plt.ylabel('Deaths')
 plt.ticklabel_format(axis="y",style="plain")
-
+plt.title("COVID-19 Deaths Over Time")
 plt.legend()
 plt.show()
