@@ -47,31 +47,31 @@ plt.title("Daily New Cases - US")
 # https://matplotlib.org/3.1.1/gallery/text_labels_and_annotations/annotation_demo.html
 plt.annotate('Thanksgiving'
             ,xy=(thanksgiving['Date int'],0),xycoords = 'data'
-            ,xytext=(0,-80),textcoords='offset pixels'
+            ,xytext=(0,-40),textcoords='offset pixels'
             ,arrowprops=dict(facecolor='black', shrink=0.05,width = 1,headwidth = 8)
             ,horizontalalignment='center', verticalalignment='top'
             )
 plt.annotate('National Emergency Declared'
             ,xy=(nationalemergency['Date int'],0),xycoords = 'data'
-            ,xytext=(0,-100),textcoords='offset pixels'
+            ,xytext=(0,-40),textcoords='offset pixels'
             ,arrowprops=dict(facecolor='black', shrink=0.05,width = 1,headwidth = 8)
             ,horizontalalignment='center', verticalalignment='top'
             )
 plt.annotate('First US Vaccination'
             ,xy=(firstvaccination['Date int'],0),xycoords = 'data'
-            ,xytext=(0,-100),textcoords='offset pixels'
+            ,xytext=(0,-60),textcoords='offset pixels'
             ,arrowprops=dict(facecolor='black', shrink=0.05,width = 1,headwidth = 8)
             ,horizontalalignment='center', verticalalignment='top'
             )
 plt.annotate('Memorial Day'
             ,xy=(memorialday['Date int'],0),xycoords = 'data'
-            ,xytext=(0,-100),textcoords='offset pixels'
+            ,xytext=(0,-40),textcoords='offset pixels'
             ,arrowprops=dict(facecolor='black', shrink=0.05,width = 1,headwidth = 8)
             ,horizontalalignment='center', verticalalignment='top'
             )
 plt.annotate('Labor Day'
             ,xy=(laborday['Date int'],0),xycoords = 'data'
-            ,xytext=(0,-100),textcoords='offset pixels'
+            ,xytext=(0,-40),textcoords='offset pixels'
             ,arrowprops=dict(facecolor='black', shrink=0.05,width = 1,headwidth = 8)
             ,horizontalalignment='center', verticalalignment='top'
             )
