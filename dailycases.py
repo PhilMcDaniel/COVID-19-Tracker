@@ -28,7 +28,9 @@ rolleddata['New Cases'] = rolleddata.Cases.diff()
 
 # add column that is date integer
 rolleddata['Date int'] = mdates.date2num(rolleddata['Date'])
-#rolleddata
+
+#top 10 days with new cases
+#rolleddata.sort_values(by='New Cases',ascending = False).head(10)
 
 # get important dates for annotation
 thanksgiving = rolleddata[rolleddata['Date'] =='2020-11-26']
