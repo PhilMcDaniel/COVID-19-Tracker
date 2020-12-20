@@ -29,8 +29,10 @@ rolleddata['New Cases'] = rolleddata.Cases.diff()
 # add column that is date integer
 rolleddata['Date int'] = mdates.date2num(rolleddata['Date'])
 
-#top 10 days with new cases
-#rolleddata.sort_values(by='New Cases',ascending = False).head(10)
+#top 10 days with new cases. will be used to annotate later
+topcases = rolleddata.sort_values(by='New Cases',ascending = False).head(1)
+topcases
+
 
 # get important dates for annotation
 thanksgiving = rolleddata[rolleddata['Date'] =='2020-11-26']
@@ -76,5 +78,15 @@ plt.annotate('Labor Day'
             ,horizontalalignment='center', verticalalignment='top'
             )
 
-
+#annotate the top daily case days using loop
+for index, row in topcases.iterrows():
+    newcases = row['New Cases']
+    newcasedateint = row['Date int']
+    date = row['Date']
+    plt.annotate(f"{newcases}"
+                ,xy=(newcasedateint,newcases),xycoords = 'data'
+                ,xytext=(newcasedateint,newcases+7500),textcoords='data'
+                ,horizontalalignment='center', verticalalignment='top'
+                ,fontsize = 'small'
+                )
 plt.show()
