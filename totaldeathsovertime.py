@@ -31,21 +31,9 @@ us = rolleddata[rolleddata["Country/Region"]=="US"]
 italy = rolleddata[rolleddata["Country/Region"]=="Italy"]
 uk = rolleddata[rolleddata["Country/Region"]=="United Kingdom"]
 
-
-#get just the dates
-datesus = us['Date']
-datesitaly = italy['Date']
-datesuk = uk['Date']
-
-#get just the values
-valus = us["Deaths"]
-valitaly = italy["Deaths"]
-valuk = uk["Deaths"]
-
-
-plt.plot(datesus.values,valus.values,label = 'US')
-plt.plot(datesitaly.values,valitaly.values,label = 'Italy')
-plt.plot(datesuk.values,valuk.values,label = 'United Kingdom')
+plt.plot(us['Date'],us["Deaths"],label = 'US')
+plt.plot(italy['Date'],italy["Deaths"],label = 'Italy')
+plt.plot(uk['Date'],uk["Deaths"],label = 'United Kingdom')
 plt.xlabel('Date')
 plt.ylabel('Deaths')
 plt.ticklabel_format(axis="y",style="plain")
