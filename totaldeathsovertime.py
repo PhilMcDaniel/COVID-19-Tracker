@@ -2,6 +2,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 #import numpy as np
 
 #url for raw data
@@ -24,19 +25,49 @@ data = data[~((data["Country/Region"]=="United Kingdom") & (data["Province/State
 
 #roll data up to 1 row per Country/Region. Some countries have the data split by province
 rolleddata = data.groupby(['Country/Region','Lat','Long','Date'],as_index=False).sum('Deaths')
-# rolleddata
+#rolleddata
+
+# add column that is date integer
+rolleddata['Date int'] = mdates.date2num(rolleddata['Date'])
+#rolleddata
 
 #filter datafrom for USA & Italy
 us = rolleddata[rolleddata["Country/Region"]=="US"]
 italy = rolleddata[rolleddata["Country/Region"]=="Italy"]
 uk = rolleddata[rolleddata["Country/Region"]=="United Kingdom"]
 
+
+#get current deaths for annotation
+curus = us.sort_values(by='Date',ascending = False).head(1)
+curitaly = italy.sort_values(by='Date',ascending = False).head(1)
+curuk = uk.sort_values(by='Date',ascending = False).head(1)
+
+
 plt.plot(us['Date'],us["Deaths"],label = 'US')
 plt.plot(italy['Date'],italy["Deaths"],label = 'Italy')
-plt.plot(uk['Date'],uk["Deaths"],label = 'United Kingdom')
+plt.plot(uk['Date'],uk['Deaths'],label = 'United Kingdom')
 plt.xlabel('Date')
 plt.ylabel('Deaths')
 plt.ticklabel_format(axis="y",style="plain")
 plt.title("COVID-19 Deaths Over Time")
 plt.legend()
+plt.annotate(curus['Deaths'].values
+            ,xy=(curus['Date int'],curus['Deaths']),xycoords = 'data'
+            ,xytext=(-10,10),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+plt.annotate(curitaly['Deaths'].values
+            ,xy=(curitaly['Date int'],curitaly['Deaths']),xycoords = 'data'
+            ,xytext=(-10,20),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+plt.annotate(curuk['Deaths'].values
+            ,xy=(curuk['Date int'],curuk['Deaths']),xycoords = 'data'
+            ,xytext=(10,-15),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+
 plt.show()

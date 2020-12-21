@@ -2,6 +2,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 #import numpy as np
 
 #url for raw data
@@ -25,10 +26,20 @@ data = data[~((data["Country/Region"]=="United Kingdom") & (data["Province/State
 rolleddata = data.groupby(['Country/Region','Lat','Long','Date'],as_index=False).sum('Cases')
 # rolleddata
 
+# add column that is date integer
+rolleddata['Date int'] = mdates.date2num(rolleddata['Date'])
+rolleddata
+
 #filter datafrom for USA & Italy
 us = rolleddata[rolleddata["Country/Region"]=="US"]
 italy = rolleddata[rolleddata["Country/Region"]=="Italy"]
 uk = rolleddata[rolleddata["Country/Region"]=="United Kingdom"]
+
+
+#get current deaths for annotation
+curus = us.sort_values(by='Date',ascending = False).head(1)
+curitaly = italy.sort_values(by='Date',ascending = False).head(1)
+curuk = uk.sort_values(by='Date',ascending = False).head(1)
 
 
 plt.plot(us['Date'],us["Cases"],label = 'US')
@@ -39,4 +50,25 @@ plt.ylabel('Cases')
 plt.ticklabel_format(axis="y",style="plain")
 plt.title("COVID-19 Cases Over Time")
 plt.legend()
+plt.annotate(curus['Cases'].values
+            ,xy=(curus['Date int'],curus['Cases']),xycoords = 'data'
+            ,xytext=(-10,10),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+plt.annotate(curitaly['Cases'].values
+            ,xy=(curitaly['Date int'],curitaly['Cases']),xycoords = 'data'
+            ,xytext=(10,-15),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+plt.annotate(curuk['Cases'].values
+            ,xy=(curuk['Date int'],curuk['Cases']),xycoords = 'data'
+            ,xytext=(-10,15),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+
+
+
 plt.show()
