@@ -32,7 +32,9 @@ rolleddata['Date int'] = mdates.date2num(rolleddata['Date'])
 
 #top 10 days with new cases. will be used to annotate later
 topcases = rolleddata.sort_values(by='New Cases',ascending = False).head(1)
-topcases
+#convert to int to get rid of .0 from float
+topcases['New Cases'] = topcases['New Cases'].astype(np.int64)
+#topcases
 
 
 # get important dates for annotation
