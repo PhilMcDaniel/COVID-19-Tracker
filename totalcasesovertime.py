@@ -71,4 +71,14 @@ plt.annotate(curuk['Cases'].values
 
 
 
+#get current figure
+figure = plt.gcf()
+
+#update current figure size before saving
+figure.set_size_inches(16,9)
+
+#save figure
+plt.savefig("TotalCasesOverTimeByCountry.png")
+
+#show figure
 plt.show()

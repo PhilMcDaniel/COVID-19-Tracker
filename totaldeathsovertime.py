@@ -70,4 +70,14 @@ plt.annotate(curuk['Deaths'].values
             ,fontsize = 'small'
             )
 
+#get current figure
+figure = plt.gcf()
+
+#update current figure size before saving
+figure.set_size_inches(16,9)
+
+#save figure
+plt.savefig("TotalDeathsOverTimeByCountry.png")
+
+#show figure
 plt.show()
