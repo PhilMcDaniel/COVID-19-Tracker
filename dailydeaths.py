@@ -42,7 +42,7 @@ topdeaths['New Deaths'] = topdeaths['New Deaths'].astype(np.int64)
 #get max date for annotation
 maxdate = rolleddata.sort_values(by='Date',ascending = False).head(1)
 maxdate = maxdate['Date']
-maxdate
+#maxdate
 
 
 # get important dates for annotation
