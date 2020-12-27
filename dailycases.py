@@ -36,6 +36,11 @@ topcases = rolleddata.sort_values(by='New Cases',ascending = False).head(1)
 topcases['New Cases'] = topcases['New Cases'].astype(np.int64)
 #topcases
 
+#get max date for annotation
+maxdate = rolleddata.sort_values(by='Date',ascending = False).head(1)
+maxdate = maxdate['Date']
+#maxdate
+
 
 # get important dates for annotation
 thanksgiving = rolleddata[rolleddata['Date'] =='2020-11-26']
@@ -93,3 +98,4 @@ for index, row in topcases.iterrows():
                 ,fontsize = 'small'
                 )
 plt.show()
+plt.savefig("USDailyCases.png")
