@@ -100,5 +100,15 @@ for index, row in topdeaths.iterrows():
                 ,horizontalalignment='center', verticalalignment='top'
                 ,fontsize = 'small'
                 )
-plt.show()
+
+#get current figure
+figure = plt.gcf()
+
+#update current figure size before saving
+figure.set_size_inches(16,9)
+
+#save figure
 plt.savefig("USDailyDeaths.png")
+
+#show figure
+plt.show()

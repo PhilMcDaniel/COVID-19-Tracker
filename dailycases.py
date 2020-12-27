@@ -97,5 +97,14 @@ for index, row in topcases.iterrows():
                 ,horizontalalignment='center', verticalalignment='top'
                 ,fontsize = 'small'
                 )
-plt.show()
+#get current figure
+figure = plt.gcf()
+
+#update current figure size before saving
+figure.set_size_inches(16,9)
+
+#save figure
 plt.savefig("USDailyCases.png")
+
+#show figure
+plt.show()
