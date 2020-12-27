@@ -39,6 +39,10 @@ topdeaths = rolleddata.sort_values(by='New Deaths',ascending = False).head(3)
 topdeaths['New Deaths'] = topdeaths['New Deaths'].astype(np.int64)
 #topdeaths.dtypes
 
+#get max date for annotation
+maxdate = rolleddata.sort_values(by='Date',ascending = False).head(1)
+maxdate = maxdate['Date']
+maxdate
 
 
 # get important dates for annotation
@@ -97,3 +101,4 @@ for index, row in topdeaths.iterrows():
                 ,fontsize = 'small'
                 )
 plt.show()
+plt.savefig("USDailyDeaths.png")
