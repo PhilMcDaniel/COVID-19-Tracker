@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
+import datetime
 
 url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv'
 
@@ -18,6 +19,9 @@ data = pd.melt(data,id_vars = ['Country_Region'],var_name = 'Date',value_name = 
 # data
 #convert data type
 data["Date"] = pd.to_datetime(data["Date"])
+#data.dtypes
+data["Date"] = data["Date"].date()
+#data
 
 # roll data up to 1 row per day for all of US
 rolleddata = data.groupby(['Country_Region','Date'],as_index=False).sum('Cases')
@@ -38,8 +42,10 @@ topcases['New Cases'] = topcases['New Cases'].astype(np.int64)
 
 #get max date for annotation
 maxdate = rolleddata.sort_values(by='Date',ascending = False).head(1)
-maxdate = maxdate['Date']
-#maxdate
+#maxdate["Date"].dt.strftime('%Y-%m-%d')
+maxdate = maxdate["Date"]
+
+
 
 
 # get important dates for annotation
@@ -97,6 +103,14 @@ for index, row in topcases.iterrows():
                 ,horizontalalignment='center', verticalalignment='top'
                 ,fontsize = 'small'
                 )
+
+#add annotation in top middle for date of latest data
+plt.annotate(f"Latest data is from: {maxdate.dt.strftime('%Y-%m-%d').values}"
+            ,xy=(.5,1),xycoords = 'axes fraction'
+            ,xytext=(-10,-10),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
 #get current figure
 figure = plt.gcf()
 

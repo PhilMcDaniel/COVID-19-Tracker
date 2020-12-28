@@ -70,6 +70,14 @@ plt.annotate(curuk['Deaths'].values
             ,fontsize = 'small'
             )
 
+#add annotation in top middle for date of latest data
+plt.annotate(f"Latest data is from: {curus['Date'].dt.strftime('%Y-%m-%d').values}"
+            ,xy=(.5,1),xycoords = 'axes fraction'
+            ,xytext=(-10,-10),textcoords='offset pixels'
+            ,horizontalalignment='center', verticalalignment='top'
+            ,fontsize = 'small'
+            )
+
 #get current figure
 figure = plt.gcf()
 
