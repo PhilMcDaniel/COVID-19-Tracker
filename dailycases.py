@@ -20,7 +20,7 @@ data = pd.melt(data,id_vars = ['Country_Region'],var_name = 'Date',value_name = 
 #convert data type
 data["Date"] = pd.to_datetime(data["Date"])
 #data.dtypes
-data["Date"] = data["Date"].date()
+#data["Date"] = data["Date"].date()
 #data
 
 # roll data up to 1 row per day for all of US
