@@ -30,6 +30,10 @@ rolleddata = data.groupby(['Country_Region','Date'],as_index=False).sum('Deaths'
 rolleddata['New Deaths'] = rolleddata.Deaths.diff()
 #rolleddata
 
+#add column for rolling average
+rolleddata['Roll'] = rolleddata['New Deaths'].rolling(window = 7).mean()
+
+
 # add column that is date integer
 rolleddata['Date int'] = mdates.date2num(rolleddata['Date'])
 
@@ -53,6 +57,8 @@ memorialday = rolleddata[rolleddata['Date'] =='2020-05-25']
 laborday = rolleddata[rolleddata['Date'] =='2020-09-07']
 
 plt.bar(rolleddata['Date'],rolleddata['New Deaths'],align='center')
+plt.plot(rolleddata['Date'],rolleddata['Roll'],color='orange',label = '7 Day Rolling Average')
+plt.legend(loc = 'upper left')
 plt.xlabel('Date')
 plt.ylabel('New Deaths')
 plt.ticklabel_format(axis="y",style="plain")
